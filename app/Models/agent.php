@@ -23,5 +23,12 @@ public function suiviQualites()
 {
     return $this->hasMany(SuiviQualite::class);
 }
-
+public function ribs()
+    {
+        return $this->hasMany(AgentRib::class);
+    }
+    public function conges()
+    {
+        return $this->hasMany(congeagent::class, 'agent_id', 'id');
+    }
 }

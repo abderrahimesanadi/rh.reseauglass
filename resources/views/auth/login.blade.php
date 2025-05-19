@@ -29,12 +29,7 @@
             <input type="password" id="password" name="password" required>
         </div>
         
-        <div class="form-group">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label class="form-check-label" for="remember">Se souvenir de moi</label>
-            </div>
-        </div>
+        
         
         <div class="form-group">
             <button type="submit">Connexion</button>

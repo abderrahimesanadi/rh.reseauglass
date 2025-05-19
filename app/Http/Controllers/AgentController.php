@@ -15,9 +15,9 @@ class AgentController extends Controller
         $counts = [];
 foreach ($services as $service) {
     $counts[$service->nom] = $service->agents_count;
-    
+}
         return view('agents.index', compact('agents', 'counts', 'services'));
-    }}
+    }
 
     public function create()
     {

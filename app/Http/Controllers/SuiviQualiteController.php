@@ -32,7 +32,7 @@ class SuiviQualiteController extends Controller
 
     public function create()
     {
-        $agents = Agent::all();
+        $agents = Agent::orderBy('nom')->orderBy('prenom')->get();
         $modules = Module::all();
         $users = User::where('role', 'responsable')->get(); // For suivi qualité dropdown
         return view('suivi-qualite.create', compact('agents', 'modules', 'users'));

@@ -18,7 +18,7 @@ class SessionController extends Controller
     public function create()
     {
         $modules = Module::all();
-        $agents = Agent::all();
+        $agents = Agent::orderBy('nom')->orderBy('prenom')->get();
         return view('session.create', compact('modules', 'agents'));
     }
 

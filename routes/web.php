@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home'); 
+
 Route::get('/employees', function () {
     return view('employees.index');
 })->name('employees.index');
@@ -112,3 +110,50 @@ Route::resource('suivi-qualite', SuiviQualiteController::class);
 // Route::put('suivi-qualite/{suiviqualite}', [SuiviQualiteController::class, 'update'])->name('suivi-qualite.update');
 Route::post('/suivi-formation/update-statut/{id}', [SuiviFormationController::class, 'updateStatut'])
     ->name('suivi-formation.update-statut');
+    Route::get('/gestion-rib', [App\Http\Controllers\GestionRibController::class, 'index'])->name('gestion-rib.index');
+Route::post('/gestion-rib/store', [App\Http\Controllers\GestionRibController::class, 'store'])->name('gestion-rib.store');
+Route::put('/gestion-rib/{id}', [App\Http\Controllers\GestionRibController::class, 'update'])->name('gestion-rib.update');
+Route::delete('/gestion-rib/{id}', [App\Http\Controllers\GestionRibController::class, 'destroy'])->name('gestion-rib.destroy');
+Route::resource('gestion-rib', App\Http\Controllers\GestionRibController::class);
+// Ajoutez ces routes à votre fichier routes/web.php
+
+
+Route::get('/api/agents', [App\Http\Controllers\SuiviCongeController::class, 'getAgents'])->name('api.agents');
+Route::get('/suivi-conge', [App\Http\Controllers\SuiviCongeController::class, 'index'])->name('suivi-conge.index');
+Route::post('/suivi-conge', [App\Http\Controllers\SuiviCongeController::class, 'store'])->name('suivi-conge.store');
+Route::delete('/suivi-conge', [App\Http\Controllers\SuiviCongeController::class, 'destroy'])->name('suivi-conge.destroy');
+Route::get('/suivi-conge/report', [App\Http\Controllers\SuiviCongeController::class, 'report'])->name('suivi-conge.report');
+Route::get('/api/agents', [App\Http\Controllers\SuiviCongeController::class, 'getAgents'])->name('api.agents');
+// Routes à ajouter dans routes/web.php
+Route::get('/suivi-conge', [App\Http\Controllers\SuiviCongeController::class, 'index'])->name('suivi-conge.index');
+Route::post('/suivi-conge/store', [App\Http\Controllers\SuiviCongeController::class, 'store'])->name('suivi-conge.store');
+Route::post('/suivi-conge/destroy', [App\Http\Controllers\SuiviCongeController::class, 'destroy'])->name('suivi-conge.destroy');
+Route::get('/suivi-conge/report', [App\Http\Controllers\SuiviCongeController::class, 'report'])->name('suivi-conge.report');
+
+// Route API pour récupérer les agents
+Route::get('/api/agents', [App\Http\Controllers\SuiviCongeController::class, 'getAgents']);
+// Remplacer cette route
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
+// Par celle-ci
+Route::get('/', function () {
+    return redirect()->route('employees.index');
+})->name('home');
+// Toutes les importations d'abord
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\MonthController;
+
+// Ensuite les définitions de routes
+Route::resource('employees', EmployeeController::class);
+Route::post('/employees/add-month', [EmployeeController::class, 'addMonthColumn'])
+    ->name('employees.add-month');
+Route::get('/months/create', [MonthController::class, 'create'])->name('months.create');
+Route::post('/months', [MonthController::class, 'store'])->name('months.store');
+Route::get('/employees/{employee}/monthly-leave/{month}/{year}/edit', [EmployeeController::class, 'editMonthlyLeave'])
+    ->name('employees.edit-monthly-leave');
+Route::put('/employees/{employee}/monthly-leave', [EmployeeController::class, 'updateMonthlyLeave'])
+    ->name('employees.update-monthly-leave');
+   
+    Route::post('suivi-conge/delete', [App\Http\Controllers\SuiviCongeController::class, 'destroy'])->name('suivi-conge.delete');
